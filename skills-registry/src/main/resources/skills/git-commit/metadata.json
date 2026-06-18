@@ -1,0 +1,9 @@
+{
+  "name": "Git Commit Guidelines",
+  "description": "Standardize Git commit messages according to Conventional Commits standards.",
+  "tags": [
+    "git",
+    "workflow",
+    "vcs"
+  ]
+}

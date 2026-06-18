@@ -1,0 +1,1 @@
+This is some code or other helper text that your custom maven plugin will copy.

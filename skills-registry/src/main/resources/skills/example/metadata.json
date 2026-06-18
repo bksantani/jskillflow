@@ -1,0 +1,8 @@
+{
+  "name": "Example Skill",
+  "description": "A placeholder skill used for testing configuration and verification.",
+  "tags": [
+    "java",
+    "example"
+  ]
+}

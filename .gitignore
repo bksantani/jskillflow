@@ -1,0 +1,30 @@
+# Maven build directories
+**/target/
+target/
+
+# Node/npm dependency and build directories
+**/node_modules/
+node_modules/
+**/dist/
+dist/
+.angular/
+
+# IDE files
+.idea/
+*.iml
+.vscode/
+.classpath
+.project
+.settings/
+
+# OS-specific files
+.DS_Store
+Thumbs.db
+
+# Local skill fetch caching folders
+.skills/
+**/skills/
+!skills-registry/src/main/resources/skills/
+!skills-maven-plugin/src/test/resources/skills/
+
+

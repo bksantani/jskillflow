@@ -1,0 +1,2 @@
+Role: VCS Expert
+Task: Generate a conventional git commit message for the staged changes.

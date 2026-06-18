@@ -1,0 +1,134 @@
+<div class="app-container">
+  <!-- Top Header -->
+  <header class="app-header">
+    <div class="brand-section">
+      <div class="logo-orb">JS</div>
+      <div>
+        <h1 class="brand-title">jskillflow</h1>
+        <p class="brand-subtitle">Enterprise AI-Agent Skill Registry</p>
+      </div>
+    </div>
+
+    <div class="version-badge-container">
+      <span class="version-label">Latest Version</span>
+      <span class="version-number">{{ latestVersion() }}</span>
+    </div>
+  </header>
+
+  <div class="main-layout">
+    <!-- Left Section: Search and Grid -->
+    <section class="skills-explorer">
+      <!-- Search Dashboard -->
+      <div class="search-bar-container">
+        <svg class="search-icon" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor"
+          stroke-width="2">
+          <circle cx="11" cy="11" r="8"></circle>
+          <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+        </svg>
+        <input type="text" placeholder="Search skills by name, description, or tags..." class="search-input"
+          [value]="searchQuery()" (input)="onSearchInput($event)" />
+        @if (searchQuery() || selectedTags().size > 0) {
+        <button class="clear-filters-btn" (click)="clearFilters()">Clear Filters</button>
+        }
+      </div>
+
+      <!-- Tag Filter Pills -->
+      @if (allTags().length > 0) {
+      <div class="tags-filter-bar">
+        @for (tag of allTags(); track tag) {
+        <button class="tag-filter-pill" [class.active]="selectedTags().has(tag)" (click)="toggleTag(tag)">
+          #{{ tag }}
+        </button>
+        }
+      </div>
+      }
+
+      <!-- Grid of Cards -->
+      <div class="skills-grid">
+        @for (skill of filteredSkills(); track skill.id) {
+        <div class="skill-card">
+          <div class="card-header">
+            <h3 class="skill-name">{{ skill.name }}</h3>
+            <span class="skill-id-badge">{{ skill.id }}</span>
+          </div>
+
+          <p class="skill-description">{{ skill.description }}</p>
+
+          <div class="card-footer">
+            <div class="skill-tags">
+              @for (tag of skill.tags; track tag) {
+              <span class="skill-tag">#{{ tag }}</span>
+              }
+            </div>
+
+            <button class="copy-btn" [class.copied]="copiedSkillId() === skill.id"
+              (click)="copyText(skill.id, skill.id)">
+              @if (copiedSkillId() === skill.id) {
+              <span class="btn-content">
+                <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5">
+                  <polyline points="20 6 9 17 4 12"></polyline>
+                </svg>
+                Copied!
+              </span>
+              } @else {
+              <span class="btn-content">
+                <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2">
+                  <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                  <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+                </svg>
+                Copy Skill ID
+              </span>
+              }
+            </button>
+          </div>
+        </div>
+        } @empty {
+        <div class="no-results">
+          <p>No skills found matching your filters.</p>
+          <button class="clear-filters-btn" (click)="clearFilters()">Reset Filters</button>
+        </div>
+        }
+      </div>
+    </section>
+
+    <!-- Right Section: How to Use Guide -->
+    <aside class="usage-guide">
+      <div class="guide-card">
+        <h2 class="guide-title">How to Use jskillflow</h2>
+        <p class="guide-text">Integrate these skills directly into your developer workflow using the custom Maven
+          plugin. Configure the plugin in your consumer project's <code>pom.xml</code> file:</p>
+
+        <div class="code-block-container">
+          <div class="code-header">
+            <span>pom.xml</span>
+            <button class="code-copy-btn" [class.copied]="copiedSkillId() === 'generic-guide'"
+              (click)="copyText(getGenericUsageSnippet(), 'generic-guide')">
+              @if (copiedSkillId() === 'generic-guide') {
+              <span>Copied!</span>
+              } @else {
+              <span>Copy</span>
+              }
+            </button>
+          </div>
+          <pre class="code-display"><code>{{ getGenericUsageSnippet() }}</code></pre>
+        </div>
+
+        <div class="guide-steps">
+          <div class="step-item">
+            <div class="step-number">1</div>
+            <p class="step-desc">Copy the specific skill snippet from any card on the left.</p>
+          </div>
+          <div class="step-item">
+            <div class="step-number">2</div>
+            <p class="step-desc">Paste it into your project's <code>&lt;plugins&gt;</code> block.</p>
+          </div>
+          <div class="step-item">
+            <div class="step-number">3</div>
+            <p class="step-desc">Run <code>mvn clean compile</code> to fetch the skill into <code>target/skills/</code>.
+            </p>
+          </div>
+        </div>
+      </div>
+    </aside>
+  </div>
+</div>

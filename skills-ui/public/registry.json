@@ -1,0 +1,23 @@
+[
+  {
+    "id": "example",
+    "name": "Example Skill",
+    "description": "A placeholder skill used for testing configuration and verification.",
+    "tags": [
+      "java",
+      "example"
+    ],
+    "version": "1.0.0-SNAPSHOT"
+  },
+  {
+    "id": "git-commit",
+    "name": "Git Commit Guidelines",
+    "description": "Standardize Git commit messages according to Conventional Commits standards.",
+    "tags": [
+      "git",
+      "workflow",
+      "vcs"
+    ],
+    "version": "1.0.0-SNAPSHOT"
+  }
+]
