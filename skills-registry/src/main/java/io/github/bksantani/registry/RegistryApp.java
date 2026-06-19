@@ -27,6 +27,9 @@ public class RegistryApp {
             // Serve static files from the classpath '/public' directory
             config.staticFiles.add("/public");
             
+            // SPA routing fallback: redirect all 404 client-side requests to index.html
+            config.spaRoot.addFile("/", "/public/index.html");
+            
             // Simple API health check endpoint
             config.routes.get("/api/health", ctx -> ctx.result("OK"));
         });

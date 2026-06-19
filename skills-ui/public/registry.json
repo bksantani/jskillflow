@@ -7,7 +7,7 @@
       "java",
       "example"
     ],
-    "version": "1.0.0-SNAPSHOT"
+    "version": "1.2.0-SNAPSHOT"
   },
   {
     "id": "git-commit",
@@ -16,8 +16,9 @@
     "tags": [
       "git",
       "workflow",
-      "vcs"
+      "vcs",
+      "development"
     ],
-    "version": "1.0.0-SNAPSHOT"
+    "version": "1.2.0-SNAPSHOT"
   }
 ]

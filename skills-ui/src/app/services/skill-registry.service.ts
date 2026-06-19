@@ -26,6 +26,11 @@ export interface Skill {
   version: string;
 }
 
+export interface Versions {
+  registryVersion: string;
+  pluginVersion: string;
+}
+
 @Injectable({
   providedIn: 'root'
 })
@@ -34,5 +39,9 @@ export class SkillRegistryService {
 
   getSkills(): Observable<Skill[]> {
     return this.http.get<Skill[]>('registry.json');
+  }
+
+  getVersions(): Observable<Versions> {
+    return this.http.get<Versions>('versions.json');
   }
 }

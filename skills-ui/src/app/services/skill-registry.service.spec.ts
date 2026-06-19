@@ -64,4 +64,20 @@ describe('SkillRegistryService', () => {
     expect(req.request.method).toBe('GET');
     req.flush(dummySkills);
   });
+
+  it('should fetch versions via GET request to versions.json', () => {
+    const dummyVersions = {
+      registryVersion: '1.2.3',
+      pluginVersion: '1.1.0'
+    };
+
+    service.getVersions().subscribe(versions => {
+      expect(versions.registryVersion).toBe('1.2.3');
+      expect(versions.pluginVersion).toBe('1.1.0');
+    });
+
+    const req = httpMock.expectOne('versions.json');
+    expect(req.request.method).toBe('GET');
+    req.flush(dummyVersions);
+  });
 });

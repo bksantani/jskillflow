@@ -1,0 +1,38 @@
+<div class="getting-started-container">
+  <div class="guide-card">
+    <h2 class="guide-title">How to Use jskillflow</h2>
+    <p class="guide-text">Integrate these skills directly into your developer workflow using the custom Maven
+      plugin. Configure the plugin in your consumer project's <code>pom.xml</code> file:</p>
+
+    <div class="code-block-container">
+      <div class="code-header">
+        <span>pom.xml</span>
+        <button class="code-copy-btn" [class.copied]="copiedSkillId() === 'generic-guide'"
+          (click)="copyText(getGenericUsageSnippet(), 'generic-guide')">
+          @if (copiedSkillId() === 'generic-guide') {
+          <span>Copied!</span>
+          } @else {
+          <span>Copy</span>
+          }
+        </button>
+      </div>
+      <pre class="code-display"><code>{{ getGenericUsageSnippet() }}</code></pre>
+    </div>
+
+    <div class="guide-steps">
+      <div class="step-item">
+        <div class="step-number">1</div>
+        <p class="step-desc">Go to the <strong>Skill Catalog</strong> page and copy the ID of any skill you want to consume.</p>
+      </div>
+      <div class="step-item">
+        <div class="step-number">2</div>
+        <p class="step-desc">Paste it under the <code>&lt;skills&gt;</code> block in your project's <code>pom.xml</code>.</p>
+      </div>
+      <div class="step-item">
+        <div class="step-number">3</div>
+        <p class="step-desc">Run <code>mvn clean compile</code> to automatically fetch and extract the skill into <code>target/skills/</code>.
+        </p>
+      </div>
+    </div>
+  </div>
+</div>

@@ -2,7 +2,7 @@
 
 **JSkillflow** is a lightweight, developer-friendly registry and distribution framework designed for managing, discovering, and delivering **AI-Agent Skills** (prompts, tool schemas, code snippets, and config files) within enterprise JVM environments.
 
-![JSkillflow Dashboard UI](docs/dashboard.png)
+![JSkillflow Dashboard UI](docs/dashboard-v1.2.png)
 
 ---
 
