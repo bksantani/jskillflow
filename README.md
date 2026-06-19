@@ -26,13 +26,15 @@ Many modern agent frameworks are Python-centric, leaving the Java enterprise eco
 ---
 
 ## Project Architecture
-The project is a monorepo consisting of three lightweight modules:
+The project is a monorepo consisting of four lightweight modules:
 
-1.  **`skills-registry` (Backend)**:
-    A lightweight Java application powered by [Javalin 7](https://javalin.io) that serves the skill catalog (`registry.json`) and hosts the static UI.
-2.  **`skills-ui` (Frontend)**:
+1.  **`skills-web` (Backend Runtime)**:
+    A [Spring Boot](https://spring.io/projects/spring-boot) web application that serves the skill catalog APIs and hosts the static UI.
+2.  **`skills-registry` (Skills Artifact)**:
+    A plain Java resource JAR that contains versioned `skills/**` content consumed by both the web app and Maven plugin.
+3.  **`skills-ui` (Frontend)**:
     A modern, high-performance [Angular](https://angular.dev) single-page application built with CSS grids, vibrant HSL gradients, glassmorphism aesthetics, and instant filtering (by text search or tags).
-3.  **`skills-maven-plugin` (Maven Integration)**:
+4.  **`skills-maven-plugin` (Maven Integration)**:
     A custom Maven plugin with goals to `list` and `fetch` skill assets during the build phase. It supports extracting resources directly from standard local directories or zipped JAR archives on the classpath.
 
 ---
@@ -81,7 +83,7 @@ The metadata file must contain strictly the following properties (`name`, `descr
 *Note: Any additional keys will trigger a validation error during build execution to prevent metadata pollution.*
 
 ### 2. Auto-Aggregation & Versioning
-When the project compiles (`mvn clean install` or the `generate-resources` phase of `skills-registry`), a build-time script:
+When the project compiles (`mvn clean install` or the `generate-resources` phase of `skills-web`), a build-time script:
 1. Dynamically reads the project version from the root `pom.xml` and assigns it to all skill configurations.
 2. Validates the `metadata.json` structure for strict compliance.
 3. Automatically compiles all skill metadata records into `public/registry.json` for consumption by the Angular frontend.
@@ -91,7 +93,7 @@ When the project compiles (`mvn clean install` or the `generate-resources` phase
 ## Getting Started
 
 ### Prerequisites
-*   Java 17 or higher
+*   Java 25
 *   Maven 3.9+
 *   Node.js (for UI development)
 
@@ -107,12 +109,18 @@ When the project compiles (`mvn clean install` or the `generate-resources` phase
     *Note: The Angular tests and Maven plugin tests run automatically during this phase.*
 
 2.  **Start the Server**:
-    Run the registry backend using the Maven exec plugin:
+    Run the Spring Boot backend from the `skills-web` module directory:
     ```bash
-    mvn exec:java -pl skills-registry -Dexec.mainClass="io.github.bksantani.registry.RegistryApp"
+    cd skills-web
+    mvn spring-boot:run
     ```
     Once started, open your browser and navigate to:
     `http://localhost:8080`
+
+    Optional: enable Spring Cloud BOM-managed dependencies if needed:
+    ```bash
+    mvn -Pwith-spring-cloud spring-boot:run
+    ```
 
 ---
 
@@ -151,7 +159,7 @@ To allow the **plugin execution code** and the **actual skill templates** to evo
                 <dependency>
                     <groupId>io.github.bksantani</groupId>
                     <artifactId>skills-registry</artifactId>
-                    <version>1.0.0-SNAPSHOT</version> <!-- Bushed when skills change -->
+                    <version>1.2.0-SNAPSHOT</version> <!-- Bumped when skills change -->
                 </dependency>
             </dependencies>
         </plugin>
@@ -161,6 +169,11 @@ To allow the **plugin execution code** and the **actual skill templates** to evo
 
 When you run `mvn clean compile` in your project, the plugin fetches the declared skills and extracts them into:
 `target/skills/[skill-id]/`
+
+### Versioning Policy
+- Keep `skills-maven-plugin` version stable unless plugin behavior/API changes.
+- Bump `skills-registry` version independently when skills content changes.
+- `skills-web` runtime upgrades (e.g., Spring Boot) do not require a plugin version bump unless plugin behavior is affected.
 
 ---
 

@@ -14,14 +14,15 @@
  * limitations under the License.
  */
 
-package io.github.bksantani.registry;
+package io.github.bksantani.web;
 
-/**
- * Marker type for the skills-registry artifact.
- *
- * Runtime web hosting moved to the skills-web Spring Boot module.
- */
-public class RegistryApp {
-    private RegistryApp() {
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+
+@SpringBootApplication
+public class SkillsWebApplication {
+    static void main(String[] args) {
+        SpringApplication.run(SkillsWebApplication.class, args);
     }
 }
+
