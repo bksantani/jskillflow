@@ -1,0 +1,20 @@
+{
+  "request": {
+    "method": "GET",
+    "urlPathPattern": "/[^/]+/[^/]+/_apis/git/pullrequests/[0-9]+",
+    "queryParameters": {
+      "api-version": {
+        "equalTo": "7.1"
+      }
+    }
+  },
+  "response": {
+    "status": 200,
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "bodyFileName": "azure/pr-details.json"
+  }
+}
+
+

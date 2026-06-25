@@ -1,0 +1,45 @@
+spring:
+  application:
+    name: skills-web
+  ai:
+    ollama:
+      base-url: http://somehost:port
+      chat:
+        model:  qwen2.5-coder:14b
+        temperature: 0.2
+
+skills:
+  web:
+    providers:
+      azure:
+        base-url: http://localhost:9999
+        api-version: "7.1"
+        max-files-to-process: 50
+        max-file-bytes: 250000
+        endpoints:
+          pr-details: "/{organization}/{project}/_apis/git/pullrequests/{pullRequestId}"
+          pr-threads: "/{organization}/{project}/_apis/git/repositories/{repositoryId}/pullrequests/{pullRequestId}/threads"
+          pr-iterations: "/{organization}/{project}/_apis/git/repositories/{repositoryId}/pullrequests/{pullRequestId}/iterations"
+          pr-iteration-changes: "/{organization}/{project}/_apis/git/repositories/{repositoryId}/pullrequests/{pullRequestId}/iterations/{iterationId}/changes"
+          blob: "/{organization}/{project}/_apis/git/repositories/{repositoryId}/blobs/{objectId}"
+    ai:
+      system-prompt: |
+        You generate a SKILL.md file for a skills registry.
+        Return markdown only.
+        Do not wrap the entire response in one outer code fence.
+        Keep it concise, actionable, and grounded in the supplied pull request context.
+        Structure the markdown with:
+        - a level-1 title
+        - a short summary paragraph
+        - a `## When to use this skill` section
+        - a `## Key learnings` section with bullets
+        - a `## Step-by-step plan` section with clearly ordered numbered steps describing exactly what to do.
+        - a `## Suggested implementation steps` section with numbered items and code references when necessary.
+        - a `## Code samples` section with at least 2 fenced code blocks when enough context exists.
+        - an optional `## Notes` section when warnings or caveats are present
+        For code samples:
+        - include a short label with file path or symbol before each snippet
+        - use fenced code blocks with language hints (for example, ```java)
+        - keep snippets small and directly tied to the provided PR context
+        Do not invent repository details that are not present in the provided context and strictly stick to the context
+        

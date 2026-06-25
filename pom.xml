@@ -23,12 +23,15 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <skills.registry.version>1.2.0-SNAPSHOT</skills.registry.version>
         <spring.boot.version>4.1.0</spring.boot.version>
+        <spring.ai.version>2.0.0</spring.ai.version>
         <spring.cloud.version>2025.1.2</spring.cloud.version>
         <maven.plugin.api.version>3.9.6</maven.plugin.api.version>
         <maven.plugin.annotations.version>3.12.0</maven.plugin.annotations.version>
-        <maven.compiler.plugin.version>3.14.0</maven.compiler.plugin.version>
+        <maven.compiler.plugin.version>3.15.0</maven.compiler.plugin.version>
         <maven.surefire.plugin.version>3.5.2</maven.surefire.plugin.version>
         <maven.failsafe.plugin.version>3.5.2</maven.failsafe.plugin.version>
+        <java-diff-utils.version>4.15</java-diff-utils.version>
+        <wiremock-spring-boot-standalone.version>4.2.1</wiremock-spring-boot-standalone.version>
     </properties>
 
     <dependencyManagement>
@@ -39,6 +42,24 @@
                 <version>${spring.boot.version}</version>
                 <type>pom</type>
                 <scope>import</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework.ai</groupId>
+                <artifactId>spring-ai-bom</artifactId>
+                <version>${spring.ai.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+            <dependency>
+                <groupId>io.github.java-diff-utils</groupId>
+                <artifactId>java-diff-utils</artifactId>
+                <version>${java-diff-utils.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.wiremock.integrations</groupId>
+                <artifactId>wiremock-spring-boot-standalone</artifactId>
+                <version>${wiremock-spring-boot-standalone.version}</version>
+                <scope>test</scope>
             </dependency>
         </dependencies>
     </dependencyManagement>
