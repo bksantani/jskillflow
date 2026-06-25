@@ -17,9 +17,11 @@
 import { Routes } from '@angular/router';
 import { SkillsCatalog } from './components/skills-catalog/skills-catalog';
 import { GettingStarted } from './components/getting-started/getting-started';
+import { PrGenerator } from './components/pr-generator/pr-generator';
 
 export const routes: Routes = [
   { path: 'catalog', component: SkillsCatalog },
   { path: 'getting-started', component: GettingStarted },
+  { path: 'generate', component: PrGenerator },
   { path: '', redirectTo: 'catalog', pathMatch: 'full' }
 ];

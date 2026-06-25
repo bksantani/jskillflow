@@ -31,6 +31,18 @@ export interface Versions {
   pluginVersion: string;
 }
 
+export interface PullRequestMetadata {
+  filesAnalyzed: number;
+  filesSkipped: number;
+  commentsIncluded: number;
+}
+
+export interface CreateSkillResponse {
+  content: string;
+  metadata: PullRequestMetadata;
+  warnings?: string[];
+}
+
 @Injectable({
   providedIn: 'root'
 })
@@ -43,5 +55,18 @@ export class SkillRegistryService {
 
   getVersions(): Observable<Versions> {
     return this.http.get<Versions>('versions.json');
+  }
+
+  generateSkillFromPR(prUrl: string, pat: string): Observable<CreateSkillResponse> {
+    return this.http.post<CreateSkillResponse>(
+      '/api/skills/pull-requests',
+      { prUrl },
+      {
+        headers: {
+          'X-Provider-Name': 'AZURE_CLOUD',
+          'X-Azure-DevOps-PAT': pat
+        }
+      }
+    );
   }
 }

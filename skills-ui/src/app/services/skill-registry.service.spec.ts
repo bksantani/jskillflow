@@ -80,4 +80,25 @@ describe('SkillRegistryService', () => {
     expect(req.request.method).toBe('GET');
     req.flush(dummyVersions);
   });
+
+  it('should generate skill from PR via POST request to /api/skills/pull-requests', () => {
+    const dummyResponse = {
+      content: 'Generated markdown prompt content',
+      metadata: { filesAnalyzed: 3, filesSkipped: 1, commentsIncluded: 5 },
+      warnings: ['Warning 1']
+    };
+    const prUrl = 'https://dev.azure.com/org/proj/_git/repo/pullrequest/12';
+    const pat = 'test-pat';
+
+    service.generateSkillFromPR(prUrl, pat).subscribe(response => {
+      expect(response).toEqual(dummyResponse);
+    });
+
+    const req = httpMock.expectOne('/api/skills/pull-requests');
+    expect(req.request.method).toBe('POST');
+    expect(req.request.headers.get('X-Provider-Name')).toBe('AZURE_CLOUD');
+    expect(req.request.headers.get('X-Azure-DevOps-PAT')).toBe(pat);
+    expect(req.request.body).toEqual({ prUrl });
+    req.flush(dummyResponse);
+  });
 });
