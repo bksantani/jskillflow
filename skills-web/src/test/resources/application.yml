@@ -3,7 +3,7 @@ spring:
     name: skills-web
   ai:
     ollama:
-      base-url: http://somehost:port
+      base-url: http://localhost:11424
       chat:
         model:  qwen2.5-coder:14b
         temperature: 0.2
