@@ -1,4 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<!-- Copyright 2026 Bharat Santani -->
+<!-- SPDX-License-Identifier: Apache-2.0 -->
 <project xmlns="http://maven.apache.org/POM/4.0.0"
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
@@ -25,7 +27,7 @@
         <spring.boot.version>4.1.0</spring.boot.version>
         <spring.ai.version>2.0.0</spring.ai.version>
         <spring.cloud.version>2025.1.2</spring.cloud.version>
-        <maven.plugin.api.version>3.9.6</maven.plugin.api.version>
+        <maven.plugin.api.version>3.9.16</maven.plugin.api.version>
         <maven.plugin.annotations.version>3.12.0</maven.plugin.annotations.version>
         <maven.compiler.plugin.version>3.15.0</maven.compiler.plugin.version>
         <maven.surefire.plugin.version>3.5.2</maven.surefire.plugin.version>
@@ -91,6 +93,22 @@
         <module>skills-web</module>
         <module>skills-maven-plugin</module>
     </modules>
+
+    <!--
+      Internal distribution model:
+      Replace these URLs and server IDs with your organization's repository endpoints.
+      This project is not configured for Maven Central publishing.
+    -->
+    <distributionManagement>
+        <repository>
+            <id>internal-releases</id>
+            <url>https://repo.example.com/maven-releases</url>
+        </repository>
+        <snapshotRepository>
+            <id>internal-snapshots</id>
+            <url>https://repo.example.com/maven-snapshots</url>
+        </snapshotRepository>
+    </distributionManagement>
 
     <profiles>
         <profile>

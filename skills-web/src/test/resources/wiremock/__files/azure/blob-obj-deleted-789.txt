@@ -1,0 +1,6 @@
+public class LegacyParser {
+    public String parse(String input) {
+        return input == null ? "" : input;
+    }
+}
+

@@ -4,7 +4,7 @@ const path = require('path');
 const srcSkillsDir = path.join(__dirname, '../../skills-registry/src/main/resources/skills');
 const destPublicDir = path.join(__dirname, '../public');
 const destRegistryJson = path.join(destPublicDir, 'registry.json');
-const destSkillsDir = path.join(destPublicDir, 'skills');
+const legacySkillsDir = path.join(destPublicDir, 'skills');
 
 // Helper to get version from pom.xml
 function getVersionFromPom(pomPath) {
@@ -46,24 +46,9 @@ console.log(`Resolved Plugin version: ${pluginVersion}`);
 if (!fs.existsSync(destPublicDir)) {
     fs.mkdirSync(destPublicDir, { recursive: true });
 }
-if (fs.existsSync(destSkillsDir)) {
-    fs.rmSync(destSkillsDir, { recursive: true, force: true });
-}
-fs.mkdirSync(destSkillsDir, { recursive: true });
-
-// Helper to copy directory recursively
-function copyRecursive(src, dest) {
-    const stats = fs.statSync(src);
-    if (stats.isDirectory()) {
-        if (!fs.existsSync(dest)) {
-            fs.mkdirSync(dest, { recursive: true });
-        }
-        fs.readdirSync(src).forEach(child => {
-            copyRecursive(path.join(src, child), path.join(dest, child));
-        });
-    } else {
-        fs.copyFileSync(src, dest);
-    }
+if (fs.existsSync(legacySkillsDir)) {
+    // Clean up old generated payloads so UI builds do not carry bulky skill files.
+    fs.rmSync(legacySkillsDir, { recursive: true, force: true });
 }
 
 // 2. Scan and aggregate skills
@@ -103,10 +88,6 @@ if (fs.existsSync(srcSkillsDir)) {
             tags: metadata.tags || [],
             version: registryVersion
         });
-
-        // Replicate skill files
-        const skillDestPath = path.join(destSkillsDir, dirName);
-        copyRecursive(skillSrcPath, skillDestPath);
     }
 } else {
     console.warn(`Source skills directory not found: ${srcSkillsDir}`);

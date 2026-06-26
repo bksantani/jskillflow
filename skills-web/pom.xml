@@ -105,7 +105,7 @@
                             <workingDirectory>../skills-ui</workingDirectory>
                             <executable>npm</executable>
                             <arguments>
-                                <argument>install</argument>
+                                <argument>ci</argument>
                             </arguments>
                         </configuration>
                     </execution>

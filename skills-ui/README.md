@@ -1,59 +1,86 @@
-# SkillsUi
+<!-- Copyright 2026 Bharat Santani -->
+<!-- SPDX-License-Identifier: Apache-2.0 -->
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 22.0.3.
+# `skills-ui`
 
-## Development server
+`skills-ui` is the Angular frontend for JSkillflow. It is the developer-facing portal that lets users:
 
-To start a local development server, run:
+- browse the published skill catalog
+- read getting-started guidance for consuming skills
+- generate a markdown skill prompt from an Azure DevOps pull request
 
-```bash
-ng serve
-```
+The application is built as a standalone Angular app and is bundled into the `skills-web` Spring Boot module during the Maven build.
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
+## What the UI does
 
-## Code scaffolding
+The app currently exposes three main views:
 
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
+- `/catalog` – browse skills from `public/registry.json`
+- `/getting-started` – explain how to consume skills and use the Maven plugin
+- `/generate` – submit an Azure DevOps pull request URL plus PAT and generate a prompt-ready markdown skill
 
-```bash
-ng generate component component-name
-```
+During local development and production builds, `scripts/aggregate.js` regenerates:
 
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
+- `public/registry.json` – aggregated skill metadata from `skills-registry`
+- `public/versions.json` – registry and plugin versions shown in the header
 
-```bash
-ng generate --help
-```
+## Pull request prompt generation
 
-## Building
+The Generate Skill screen calls the backend endpoint `POST /api/skills/pull-requests` and displays:
 
-To build the project run:
+- generated markdown content
+- analyzed/skipped file counts
+- included review comment count
+- warnings for skipped files or upstream fetch issues
 
-```bash
-ng build
-```
+Important backend guardrails that the UI should expect:
 
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
+- only up to **50 changed files** are processed per request
+- remaining files are skipped and reported as warnings
+- binary or unsuitable assets such as `.png`, `.svg`, archives, fonts, and compiled artifacts are skipped before they are added to the prompt
 
-## Running unit tests
+## Local development
 
-To execute unit tests with the [Vitest](https://vitest.dev/) test runner, use the following command:
-
-```bash
-ng test
-```
-
-## Running end-to-end tests
-
-For end-to-end (e2e) testing, run:
+Install dependencies:
 
 ```bash
-ng e2e
+npm ci
 ```
 
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
+Start the Angular dev server:
 
-## Additional Resources
+```bash
+npm start
+```
 
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+Then open `http://localhost:4200/`.
+
+> `npm start` runs the aggregation script first so the catalog and version metadata stay in sync with the monorepo.
+
+## Build
+
+Create a production build:
+
+```bash
+npm run build
+```
+
+The build output is written to `dist/skills-ui/` and later copied into `skills-web` during the Maven build.
+
+## Tests
+
+Run the UI unit tests:
+
+```bash
+npm test
+```
+
+## Relationship to the Maven build
+
+From the monorepo root, running Maven will also build and test this Angular app through the `skills-web` module:
+
+```bash
+mvn test
+```
+
+That flow installs npm dependencies, regenerates aggregated UI data, builds the frontend, and executes the Angular test suite.
