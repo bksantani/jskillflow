@@ -17,6 +17,7 @@ This repository is a multi-module monorepo with:
 Please:
 
 - read the root `README.md`
+- use `SUPPORT.md` for help and issue routing expectations
 - search existing issues / pull requests before starting work
 - keep changes focused and scoped to a single improvement whenever possible
 

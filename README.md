@@ -13,6 +13,7 @@ This repository is open source, while the default distribution model is internal
 
 - [Contributing Guide](CONTRIBUTING.md)
 - [Security Policy](SECURITY.md)
+- [Support Guide](SUPPORT.md)
 - [Code of Conduct](CODE_OF_CONDUCT.md)
 
 ---

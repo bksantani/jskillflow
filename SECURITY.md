@@ -26,6 +26,8 @@ Please do **not** report security vulnerabilities through public issues or publi
 
 Instead, report vulnerabilities privately to the project maintainer through a private disclosure channel you control for this repository.
 
+For general support requests, use `SUPPORT.md` and public issue templates instead of this channel.
+
 When reporting, please include:
 
 - affected module(s)
