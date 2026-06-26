@@ -1,0 +1,9 @@
+public final class TrimUtils {
+    private TrimUtils() {
+    }
+
+    public static String trimToEmpty(String input) {
+        return input == null ? "" : input.trim();
+    }
+}
+

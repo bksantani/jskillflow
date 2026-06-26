@@ -1,0 +1,15 @@
+{
+  "request": {
+    "method": "GET",
+    "urlPathPattern": "/[^/]+/[^/]+/_apis/git/repositories/[^/]+/pullrequests/[0-9]+/iterations"
+  },
+  "response": {
+    "status": 200,
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "bodyFileName": "azure/pr-iterations.json"
+  }
+}
+
+

@@ -1,0 +1,12 @@
+# Copyright 2026 Bharat Santani
+# SPDX-License-Identifier: Apache-2.0
+
+blank_issues_enabled: false
+
+contact_links:
+  - name: Security vulnerability report (private)
+    url: https://github.com/bksantani/jskillflow/security/advisories/new
+    about: Report security vulnerabilities privately. Do not open public issues for security reports.
+  - name: Support and usage help
+    url: https://github.com/bksantani/jskillflow/blob/main/SUPPORT.md
+    about: Find support expectations, bug reporting guidance, and help channels.

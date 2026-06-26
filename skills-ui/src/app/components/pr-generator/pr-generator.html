@@ -1,0 +1,134 @@
+<div class="generator-container">
+  <div class="guide-card">
+    <h2 class="guide-title">Generate Skill from Pull Request</h2>
+    <p class="guide-text">
+      Extract and build a custom AI agent skill/prompt directly from an Azure DevOps pull request.
+      Provide the pull request URL and your Azure Personal Access Token (PAT) below to generate the prompt.
+    </p>
+
+    <form (submit)="generatePrompt(); $event.preventDefault()">
+      <div class="form-group">
+        <label for="pr-url" class="form-label">Azure Pull Request URL</label>
+        <input
+          id="pr-url"
+          type="text"
+          placeholder="https://dev.azure.com/{organization}/{project}/_git/{repository}/pullrequest/{id}"
+          class="form-input"
+          [value]="prUrl()"
+          (input)="onPrUrlInput($event)"
+          [disabled]="isLoading()"
+          required
+        />
+      </div>
+
+      <div class="form-group">
+        <label for="azure-pat" class="form-label">Azure Personal Access Token (PAT)</label>
+        <input
+          id="azure-pat"
+          type="password"
+          placeholder="Enter your Azure DevOps PAT"
+          class="form-input"
+          [value]="pat()"
+          (input)="onPatInput($event)"
+          [disabled]="isLoading()"
+          required
+        />
+      </div>
+
+      <button
+        type="submit"
+        class="form-submit-btn"
+        [disabled]="isLoading() || !prUrl().trim() || !pat().trim()"
+      >
+        @if (isLoading()) {
+          <svg class="spinner" viewBox="0 0 24 24" width="18" height="18" stroke="currentColor" stroke-width="3" fill="none">
+            <circle cx="12" cy="12" r="10" stroke-opacity="0.25"></circle>
+            <path d="M12 2a10 10 0 0 1 10 10" stroke-linecap="round">
+              <animateTransform
+                attributeName="transform"
+                type="rotate"
+                from="0 12 12"
+                to="360 12 12"
+                dur="1s"
+                repeatCount="indefinite"
+              />
+            </path>
+          </svg>
+          Generating...
+        } @else {
+          <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path>
+          </svg>
+          Generate Prompt
+        }
+      </button>
+    </form>
+  </div>
+
+  @if (error()) {
+    <div class="alert-box">
+      <svg class="alert-icon" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2">
+        <circle cx="12" cy="12" r="10"></circle>
+        <line x1="12" y1="8" x2="12" y2="12"></line>
+        <line x1="12" y1="16" x2="12.01" y2="16"></line>
+      </svg>
+      <div>
+        <strong>Generation Failed:</strong> {{ error() }}
+      </div>
+    </div>
+  }
+
+  @if (result()) {
+    <div class="result-section">
+      <!-- Metadata Cards Dashboard -->
+      <div class="metadata-grid">
+        <div class="metadata-card">
+          <div class="metadata-value">{{ result()?.metadata?.filesAnalyzed }}</div>
+          <div class="metadata-label">Files Analyzed</div>
+        </div>
+        <div class="metadata-card">
+          <div class="metadata-value">{{ result()?.metadata?.filesSkipped }}</div>
+          <div class="metadata-label">Files Skipped</div>
+        </div>
+        <div class="metadata-card">
+          <div class="metadata-value">{{ result()?.metadata?.commentsIncluded }}</div>
+          <div class="metadata-label">Comments Included</div>
+        </div>
+      </div>
+
+      <!-- Warnings container -->
+      @if ((result()?.warnings?.length ?? 0) > 0) {
+        <div class="alert-box alert-warning">
+          <svg class="alert-icon" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path>
+            <line x1="12" y1="9" x2="12" y2="13"></line>
+            <line x1="12" y1="17" x2="12.01" y2="17"></line>
+          </svg>
+          <div>
+            <strong>Warnings:</strong>
+            <ul style="margin: 0.5rem 0 0 1rem; padding: 0;">
+              @for (warning of result()?.warnings; track warning) {
+                <li>{{ warning }}</li>
+              }
+            </ul>
+          </div>
+        </div>
+      }
+
+      <!-- Result Prompt Container -->
+      <div class="code-block-container">
+        <div class="code-header">
+          <span>Generated Skill Prompt (Markdown)</span>
+          <button class="code-copy-btn" [class.copied]="copied()" (click)="copyPrompt()">
+            @if (copied()) {
+              <span>Copied!</span>
+            } @else {
+              <span>Copy Prompt</span>
+            }
+          </button>
+        </div>
+        <pre class="code-display"><code style="white-space: pre-wrap; word-break: break-all;">{{ result()?.content }}</code></pre>
+      </div>
+    </div>
+  }
+</div>

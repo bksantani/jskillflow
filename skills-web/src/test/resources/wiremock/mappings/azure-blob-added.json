@@ -1,0 +1,19 @@
+{
+  "request": {
+    "method": "GET",
+    "urlPathPattern": "/[^/]+/[^/]+/_apis/git/repositories/[^/]+/blobs/obj-added-101",
+    "queryParameters": {
+      "api-version": {
+        "equalTo": "7.1"
+      }
+    }
+  },
+  "response": {
+    "status": 200,
+    "headers": {
+      "Content-Type": "text/plain; charset=UTF-8"
+    },
+    "bodyFileName": "azure/blob-obj-added-101.txt"
+  }
+}
+

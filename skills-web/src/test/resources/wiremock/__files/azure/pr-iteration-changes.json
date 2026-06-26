@@ -1,0 +1,38 @@
+{
+  "changeEntries": [
+    {
+      "changeType": "edit",
+      "item": {
+        "path": "/src/main/java/com/example/Parser.java",
+        "originalObjectId": "obj-old-123",
+        "objectId": "obj-new-456"
+      }
+    },
+    {
+      "changeType": "delete",
+      "item": {
+        "path": "/src/main/java/com/example/LegacyParser.java",
+        "originalObjectId": "obj-deleted-789",
+        "objectId": ""
+      }
+    },
+    {
+      "changeType": "add",
+      "item": {
+        "path": "/src/main/java/com/example/TrimUtils.java",
+        "originalObjectId": "",
+        "objectId": "obj-added-101"
+      }
+    },
+    {
+      "changeType": "add",
+      "item": {
+        "path": "/docs/architecture.svg",
+        "originalObjectId": "",
+        "objectId": "obj-svg-102"
+      }
+    }
+  ]
+}
+
+

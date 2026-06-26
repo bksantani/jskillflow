@@ -14,16 +14,10 @@
  * limitations under the License.
  */
 
-package io.github.bksantani.web.api;
+package io.github.bksantani.web.exceptions;
 
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RestController;
-
-@RestController
-public class HealthController {
-    @GetMapping("/api/health")
-    public String health() {
-        return "OK";
+public class SkillsWebBadRequestException extends RuntimeException {
+    public SkillsWebBadRequestException(String message) {
+        super(message);
     }
 }
-
