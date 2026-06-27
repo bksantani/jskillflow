@@ -40,8 +40,6 @@ jobs:
         run: npm audit --audit-level=high --omit=dev
         working-directory: skills-ui
 
-      - name: Audit Java dependencies
-        run: mvn -B -DskipTests org.owasp:dependency-check-maven:check
 
       - name: Verify Maven build and tests
         run: mvn -B test

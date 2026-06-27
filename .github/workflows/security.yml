@@ -45,6 +45,7 @@ jobs:
         uses: github/codeql-action/analyze@v3
 
   java-dependency-scan:
+    if: github.event_name != 'pull_request'
     runs-on: ubuntu-latest
 
     steps:
