@@ -44,6 +44,45 @@ jobs:
       - name: Perform CodeQL analysis
         uses: github/codeql-action/analyze@v3
 
+  java-dependency-scan:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Set up Java
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '25'
+          cache: maven
+
+      - name: Audit Java dependencies
+        run: mvn -B -DskipTests org.owasp:dependency-check-maven:check
+
+  skills-ui-dependency-scan:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+          cache: npm
+          cache-dependency-path: skills-ui/package-lock.json
+
+      - name: Install skills-ui dependencies
+        run: npm ci
+        working-directory: skills-ui
+
+      - name: Audit skills-ui dependencies
+        run: npm audit --audit-level=high
+        working-directory: skills-ui
+
   dependency-review:
     if: github.event_name == 'pull_request'
     runs-on: ubuntu-latest
@@ -59,7 +98,3 @@ jobs:
         uses: actions/dependency-review-action@v4
         with:
           fail-on-severity: high
-
-
-
-

@@ -32,6 +32,17 @@ jobs:
           cache: npm
           cache-dependency-path: skills-ui/package-lock.json
 
+      - name: Install skills-ui dependencies
+        run: npm ci
+        working-directory: skills-ui
+
+      - name: Audit skills-ui dependencies
+        run: npm audit --audit-level=high
+        working-directory: skills-ui
+
+      - name: Audit Java dependencies
+        run: mvn -B -DskipTests org.owasp:dependency-check-maven:check
+
       - name: Verify Maven build and tests
         run: mvn -B test
 
