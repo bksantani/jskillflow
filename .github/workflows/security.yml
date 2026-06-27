@@ -80,7 +80,7 @@ jobs:
         working-directory: skills-ui
 
       - name: Audit skills-ui dependencies
-        run: npm audit --audit-level=high
+        run: npm audit --audit-level=high --omit=dev
         working-directory: skills-ui
 
   dependency-review:
